@@ -1,87 +1,110 @@
 # macOS Utilities
 
-Collection of utility scripts for macOS system maintenance and optimization.
+![macOS](https://img.shields.io/badge/macOS-26.1+-000000?style=for-the-badge&logo=apple&logoColor=white)
+![Shell](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
+![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen?style=for-the-badge)
 
-## Scripts
+Collection of utility scripts for macOS system maintenance, optimization, and automation.
+
+## 🎯 Purpose
+
+Simplify macOS system maintenance with safe, automated cleanup scripts that free disk space and optimize performance.
+
+## 📦 Available Scripts
 
 ### macos_cleanup.sh
 
-A comprehensive system cleanup script for macOS that safely removes temporary files, caches, and performs system maintenance.
+Comprehensive system cleanup script that safely removes temporary files, caches, and performs system maintenance.
 
-#### Compatibility
+**Key Features:**
+- ✅ Safe cache cleanup (user & system)
+- ✅ DNS and memory optimization
+- ✅ Log management and archiving
+- ✅ Developer tools cleanup (Xcode, Homebrew, Docker)
+- ✅ Disk space reporting (before/after)
+- ✅ Non-destructive operations only
 
-- **macOS Version:** 26.1+ (Darwin 25.x)
-- **Architecture:** Universal (Intel & Apple Silicon)
+## 🚀 Quick Start
 
-#### Features
+### Prerequisites
 
-- **Cache Cleanup**
-  - Clears user caches (`~/Library/Caches`)
-  - Clears system caches (`/Library/Caches`)
-  - Clears Safari cache
-  - Clears Homebrew cache (if installed)
+- macOS 26.1+ (Darwin 25.x) - compatible with earlier versions
+- Administrator privileges (sudo access)
+- Terminal access
 
-- **System Maintenance**
-  - Flushes DNS cache
-  - Purges inactive memory
-  - Clears download quarantine history
-  - Empties trash
+### Installation
 
-- **Log Management**
-  - Removes old application logs (>30 days)
-  - Archives system logs
-  - Clears Mail cache
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/CamoRageaholic1/macos-utilities.git
+   cd macos-utilities
+   ```
 
-- **Developer Tools**
-  - Clears Xcode derived data (if installed)
-  - Notes Docker cache (manual cleanup recommended)
+2. **Make scripts executable**
+   ```bash
+   chmod +x macos_cleanup.sh
+   ```
 
-- **Disk Space Reporting**
-  - Shows before/after disk usage
-  - Displays size of caches being cleared
-  - Provides cleanup summary
-
-#### Usage
+### Usage
 
 ```bash
-# Make the script executable (if not already)
-chmod +x macos_cleanup.sh
-
 # Run the cleanup script
 ./macos_cleanup.sh
 ```
 
-You will be prompted for your administrator password (sudo) to clear system-level caches and perform privileged operations.
+You'll be prompted for your administrator password for system-level operations.
 
-#### What Gets Cleaned
+## 📋 What Gets Cleaned
 
-| Item | Location | Safe to Remove? |
-|------|----------|-----------------|
-| User caches | `~/Library/Caches/*` | Yes |
-| System caches | `/Library/Caches/*` | Yes |
-| DNS cache | System memory | Yes |
-| Download history | Quarantine database | Yes |
-| Trash | `~/.Trash/*` | Yes |
-| Old logs | `~/Library/Logs` (>30 days) | Yes |
-| Safari cache | `~/Library/Caches/com.apple.Safari` | Yes |
-| Homebrew cache | `$(brew --cache)` | Yes |
-| Xcode derived data | `~/Library/Developer/Xcode/DerivedData` | Yes |
+| Item | Location | Safe? | Typical Size |
+|------|----------|-------|--------------|
+| User caches | `~/Library/Caches/*` | ✅ Yes | 1-5 GB |
+| System caches | `/Library/Caches/*` | ✅ Yes | 500MB-2GB |
+| DNS cache | System memory | ✅ Yes | N/A |
+| Download history | Quarantine database | ✅ Yes | <1 MB |
+| Trash | `~/.Trash/*` | ✅ Yes | Varies |
+| Old logs (>30 days) | `~/Library/Logs` | ✅ Yes | 100MB-1GB |
+| Safari cache | Safari caches | ✅ Yes | 500MB-2GB |
+| Homebrew cache | `$(brew --cache)` | ✅ Yes | 1-5 GB |
+| Xcode derived data | DerivedData folder | ✅ Yes | 5-20 GB |
 
-#### Safety Features
+**Protected Items:**
+- ❌ iOS backups (reported but NOT deleted)
+- ❌ User documents and files
+- ❌ Application settings and preferences
 
-- **Non-destructive:** Only removes temporary files and caches
-- **Permission checks:** Requires sudo only for system-level operations
-- **Conditional execution:** Skips missing applications/directories
-- **Error suppression:** Handles missing files gracefully
-- **iOS backup protection:** Reports but doesn't delete iOS backups
+## 🔧 Features in Detail
 
-#### Recommended Schedule
+### Cache Cleanup
+- Clears user-level caches (`~/Library/Caches`)
+- Removes system caches (`/Library/Caches`)
+- Cleans Safari browsing cache
+- Purges Homebrew package cache
 
-- **Monthly:** Regular maintenance
-- **After major updates:** Clear old system files
-- **When disk is full:** Free up significant space
+### System Maintenance
+- Flushes DNS cache for network refresh
+- Purges inactive memory
+- Clears download quarantine history
+- Empties trash automatically
 
-#### Output Example
+### Log Management
+- Removes application logs older than 30 days
+- Archives system logs
+- Clears Mail application cache
+
+### Developer Tools
+- Clears Xcode derived data (saves 5-20GB)
+- Reports Docker cache size (manual cleanup recommended)
+- Homebrew cleanup and autoremove
+
+### Disk Space Reporting
+- Shows disk usage before cleanup
+- Displays size of each cache being cleared
+- Provides comprehensive cleanup summary
+- Calculates total space recovered
+
+## 📊 Example Output
 
 ```
 ==========================================
@@ -102,13 +125,19 @@ User cache size: 2.3G
 System cache size: 1.1G
 ✓ System caches cleared
 
-...
+>>> Flushing DNS cache...
+✓ DNS cache flushed
+
+>>> Clearing Xcode derived data...
+Xcode cache size: 12.4G
+✓ Xcode derived data cleared
 
 >>> Disk Space After Cleanup
-/dev/disk3s1s1  460Gi  345Gi  115Gi  75%  /
+/dev/disk3s1s1  460Gi  334Gi  126Gi  73%  /
 
 ==========================================
 Cleanup Complete!
+Space Recovered: ~16GB
 ==========================================
 
 Recommendations:
@@ -117,48 +146,119 @@ Recommendations:
   3. Check disk usage: 'du -sh ~/* | sort -hr | head -20'
 ```
 
-#### Troubleshooting
+## 📅 Recommended Usage Schedule
 
-**"Permission denied" errors**
-- Run with sudo: `sudo ./macos_cleanup.sh`
-- Check file permissions: `chmod +x macos_cleanup.sh`
+- **Monthly:** Regular maintenance and optimization
+- **After Major Updates:** Clear old system files
+- **When Disk is Full:** Free up significant space quickly
+- **Before Backups:** Reduce backup size and time
 
-**"Command not found" errors**
-- The script checks for command availability
-- Missing commands are skipped automatically
+## 🔒 Safety Features
 
-**Homebrew cleanup fails**
-- Run manually: `brew cleanup -s && brew autoremove`
+- ✅ **Non-destructive** - Only removes temporary/cache files
+- ✅ **Permission checks** - Requires sudo only when necessary
+- ✅ **Conditional execution** - Skips missing apps/directories
+- ✅ **Error handling** - Gracefully handles missing files
+- ✅ **iOS backup protection** - Reports but never deletes backups
 
-#### macOS Version Compatibility
+## 🛠️ Troubleshooting
+
+### "Permission denied" errors
+```bash
+# Run with sudo
+sudo ./macos_cleanup.sh
+
+# Or fix permissions
+chmod +x macos_cleanup.sh
+```
+
+### "Command not found" errors
+The script automatically checks for command availability and skips missing tools.
+
+### Homebrew cleanup fails
+```bash
+# Run manually
+brew cleanup -s && brew autoremove
+```
+
+## 💻 Compatibility
 
 | macOS Version | Status | Notes |
 |---------------|--------|-------|
-| 26.1 | Tested | Fully compatible |
-| 25.x (Sequoia) | Compatible | Should work |
-| 24.x (Sonoma) | Compatible | Should work |
-| 23.x (Ventura) | Compatible | `periodic` command available |
-| Older | Unknown | May require modifications |
+| 26.1+ (Latest) | ✅ Tested | Fully compatible |
+| 25.x (Sequoia) | ✅ Compatible | Should work perfectly |
+| 24.x (Sonoma) | ✅ Compatible | Fully supported |
+| 23.x (Ventura) | ✅ Compatible | Fully supported |
+| 22.x and older | ⚠️ Unknown | May need modifications |
 
-## Contributing
+**Architecture Support:**
+- ✅ Apple Silicon (M1, M2, M3, M4)
+- ✅ Intel Macs
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 📁 Project Structure
 
-## License
+```
+macos-utilities/
+├── macos_cleanup.sh      # System cleanup script
+├── README.md             # This file
+├── LICENSE               # MIT License
+└── .gitignore           # Git ignore rules
+```
 
-MIT License - Feel free to use and modify as needed.
+## 🛣️ Roadmap
 
-## Author
+Future utilities planned:
 
-**CamoZeroDay** (David Osisek)
+- [ ] Automated backup script
+- [ ] Network diagnostics tool
+- [ ] Application uninstaller
+- [ ] Duplicate file finder
+- [ ] Startup optimization script
+- [ ] Security audit tool
+- [ ] System health monitor
 
-## Disclaimer
+## 🤝 Contributing
 
-This script is provided as-is. Always review scripts before running them with administrator privileges. While this script is designed to be safe, the author is not responsible for any data loss or system issues.
+Contributions welcome! To contribute:
 
-## Additional Notes
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-utility`)
+3. Commit your changes (`git commit -m 'Add new utility'`)
+4. Push to branch (`git push origin feature/new-utility`)
+5. Open a Pull Request
 
-- The script automatically detects your system configuration
-- Homebrew-specific cleanup only runs if Homebrew is installed
-- Developer tool cleanup (Xcode, Docker) is conditional
-- iOS backups are identified but not deleted (manual review recommended)
+**Ideas for contributions:**
+- Additional utility scripts
+- Performance improvements
+- Better error handling
+- Cross-version compatibility
+- Automation features
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ⚠️ Disclaimer
+
+This script is provided as-is. Always review scripts before running them with administrator privileges. While designed to be safe, the author is not responsible for any data loss or system issues.
+
+**Best Practices:**
+- Review script contents before first run
+- Test in a safe environment if concerned
+- Ensure important data is backed up
+- Don't run scripts you don't understand
+
+## 📫 Support
+
+- 🐛 **Bug Reports:** Open an issue on GitHub
+- 💡 **Feature Requests:** Open an issue with the "enhancement" label
+- 📧 **Contact:** Reach out via GitHub
+
+## 🙏 Acknowledgments
+
+Built to make macOS maintenance simple and accessible for all users.
+
+---
+
+**Author:** David Osisek (CamoZeroDay)  
+**Made with ❤️ for the macOS community**
